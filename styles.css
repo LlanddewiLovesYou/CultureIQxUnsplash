@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap");
+
+body {
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
+  margin: 0;
+  text-align: center;
+  position: relative;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+input {
+  padding: 15px;
+  width: 20%;
+  border-radius: 3px;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+button {
+  color: white;
+  background-color: red;
+  border: none;
+  border-radius: 3px;
+  padding: 17px;
+  font-size: 20px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#photo-results {
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+  justify-content: center;
+  margin: 0 40px;
+}
+
+.thumbnail {
+  height: 235px;
+  width: 235px;
+  margin: 15px;
+}
+
+.large {
+  height: 400px;
+}
+
+.close {
+  background-image: url("./close-512.webp");
+  background-size: cover;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.modal {
+  position: absolute;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(100, 100, 100, 0.5);
+}
+
+.modal.visible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.modal-background {
+  padding: 40px;
+  padding-top: 10px;
+  /* position: absolute;
+  top: 300px;
+  left: 300px; */
+
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: 2px 2px 2px 2px rgba(100, 100, 100, 0.5);
+}

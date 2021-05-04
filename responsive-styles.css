@@ -1,0 +1,25 @@
+@media (max-width: 767px) {
+  h1 {
+    font-size: 22px;
+  }
+  h2 {
+    font-size: 18px;
+    margin: 0 30px;
+  }
+  input {
+    width: 55%;
+  }
+  button {
+    padding: 15px;
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 426px) {
+  .large {
+    height: auto;
+    max-width: 300px;
+  }
+
+  /* .modal-background */
+}
