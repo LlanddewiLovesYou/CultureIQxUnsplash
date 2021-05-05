@@ -49,6 +49,8 @@ button {
   height: 235px;
   width: 235px;
   margin: 15px;
+  object-fit: cover;
+  cursor: pointer;
 }
 
 .large {

@@ -1,27 +1,32 @@
 const UNSPLASH_BASE_URL = "https://api.unsplash.com/search/photos"
 const UNSPLASH_API_KEY = "Kwmz0jittYrHpDWnjppCukrtXUzZimVBNc3zGD8c06g"
 
+const elements = {
+  searchButton: document.getElementById('search-button'),
+  modal: document.getElementById('modal'),
+  modalImage: document.getElementById('modal-image'),
+  details: document.getElementById('modal-description'),
+  queryElement: document.getElementById('query'),
+  input: document.getElementById('search-input'),
+  close: document.getElementById('close')
+}
+
 function getPhotoFromLocalStorageById(id) {
   const photos = JSON.parse(window.localStorage.getItem('photos'))
   return photos.filter((photo) => photo.id === id)[0]
 }
 
 function openModal(photoElementId) {
-  const modal = document.getElementById('modal')
-  const modalImage = document.getElementById('modal-image')
-  const details = document.getElementById('modal-description')
-  modalImage.innerHTML = null
-
+  elements.modalImage.innerHTML = null
   const photo = getPhotoFromLocalStorageById(photoElementId)
-  createAndAppendPhotoElement(photo, modalImage, 'large')
-  details.innerHTML = photo.id
+  createAndAppendPhotoElement(photo, elements.modalImage, 'large')
+  elements.details.innerHTML = photo.id
   window.scrollTo(0,0)
-  modal.classList.add('visible')
+  elements.modal.classList.add('visible')
 }
 
 function closeModal() {
-  const modal = document.getElementById('modal')
-  modal.classList.remove('visible')
+  elements.modal.classList.remove('visible')
 }
 
 function createAndAppendPhotoElement(photo, parent, classname) {
@@ -35,10 +40,9 @@ function createAndAppendPhotoElement(photo, parent, classname) {
   parent.append(photoElement)
 }
 
-function appendQueryToDom(element) {
+function appendQueryToDom() {
   const query = window.localStorage.getItem("query")
-  const queryElement = document.getElementById('query')
-  queryElement.innerHTML = `Search results for "${query}"`
+  elements.queryElement.innerHTML = `Search results for "${query}"`
 }
 
 function appendThumbnailsToDom() {
@@ -46,39 +50,35 @@ function appendThumbnailsToDom() {
   const photoResultsSection = document.getElementById('photo-results')
   photoResultsSection.innerHTML = null
 
-  appendQueryToDom(photoResultsSection)
+  appendQueryToDom()
   photos.forEach((photo) => {
     createAndAppendPhotoElement(photo, photoResultsSection, 'thumbnail')
   })
 }
 
 function getPhotos() {
-  const input = document.getElementById('search-input')
-  const query = input.value
+  const query = elements.input.value
   return fetch(`${UNSPLASH_BASE_URL}?client_id=${UNSPLASH_API_KEY}&query=${query}`)
     .then((response) => {
       return response.json()
   }).then((photos) => {
     window.localStorage.setItem("photos", JSON.stringify(photos.results))
     window.localStorage.setItem("query", query)
-    input.value = ''
+    elements.input.value = ''
   })
 }
 
 function addListenerToModal() {
-  const close = document.getElementById('close')
-  const modal = document.getElementById('modal')
-  modal.addEventListener('click', function() {
+  elements.modal.addEventListener('click', function() {
     closeModal()
   })
-  close.addEventListener('click', function() {
+  elements.close.addEventListener('click', function() {
     closeModal()
   })
 }
 
 function addListenerToSearchButton() {
-  const searchButton = document.querySelector('#search-button');
-  searchButton.addEventListener("click", function(e) {
+  elements.searchButton.addEventListener("click", function(e) {
     e.preventDefault()
     getPhotos().then(() => {
       appendThumbnailsToDom()
@@ -86,10 +86,15 @@ function addListenerToSearchButton() {
   })
 }
 
+function resetLocalStorage() {
+  window.localStorage.setItem('photos','[]')
+  window.localStorage.setItem('query','')
+}
+
 function initPage() {
   addListenerToSearchButton()
   addListenerToModal()
-  window.localStorage.setItem('photos','[]')
+  resetLocalStorage()
 }
 
 initPage()
